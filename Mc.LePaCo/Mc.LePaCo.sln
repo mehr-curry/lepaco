@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc.LePaCo", "Mc.LePaCo\Mc.LePaCo.csproj", "{ADA2D162-F87D-480C-B9EE-C75F6661C905}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc.LePaCo", "Mc.LePaCo\Mc.LePaCo.csproj", "{ADA2D162-F87D-480C-B9EE-C75F6661C905}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc.LePaCoTests", "Mc.LePaCoTests\Mc.LePaCoTests.csproj", "{C3A148CB-B818-4DBE-A4E6-76B7C6871EEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{ADA2D162-F87D-480C-B9EE-C75F6661C905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADA2D162-F87D-480C-B9EE-C75F6661C905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADA2D162-F87D-480C-B9EE-C75F6661C905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A148CB-B818-4DBE-A4E6-76B7C6871EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A148CB-B818-4DBE-A4E6-76B7C6871EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A148CB-B818-4DBE-A4E6-76B7C6871EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A148CB-B818-4DBE-A4E6-76B7C6871EEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
