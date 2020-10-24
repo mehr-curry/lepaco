@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace Mc.LePaCo
@@ -16,29 +20,27 @@ namespace Mc.LePaCo
     {
         private readonly TextReader _reader;
 
-        public static IReadOnlyCollection<string> AvailableTokens = new ReadOnlyCollection<string>(
-            new List<string>
-            {
-                // logische Operatoren
-                "and", "or", "xor",
-                // Gruppierungsoperatoren
-                "(", ")",
-                // Vergleichsoperatoren
-                "=", "<>", "<", ">",
-                // Dereferenzierung
-                ".",
-                // Auswahl
-                "in", ",",
-                // Identifier
-                "[", "]",
-                // Stringliterale
-                "\"", "'"
-            }
-        );
+        public IEnumerable<ITokenizer> Tokenizers { get; }
 
         public Lexer(TextReader reader)
         {
-            _reader = reader;
+            _reader = reader ?? throw new ArgumentNullException(nameof(reader));
+            Tokenizers = new ITokenizer[]
+            {
+                new StringTokenizer(_reader), 
+                new CompareOperatorTokenizer(_reader), 
+                new IdentifierTokenizer(_reader)
+            };
+        }
+
+        public async ValueTask<Token> NextTokenAsync()
+        {
+            foreach (var tokenizer in Tokenizers)
+            {
+                
+            }
+
+            return new Token(string.Empty, Span<char>.Empty);
         }
 
         public unsafe Token GetNextToken()
@@ -46,54 +48,66 @@ namespace Mc.LePaCo
             var buffer = new char[50];
             fixed (char* b = &buffer[0])
             {
+                ////var type = TokenType.None;
+                ////var explicitIdentifierUsed = false;
+                //var i = 0;
+                //for (var next = _reader.Read(); i <= buffer.Length && -1 != next; i++, next = _reader.Read())
+                //{
+                //    if (i == buffer.Length) throw new OutOfMemoryException($"{nameof(buffer)} was to small.");
 
-                var type = TokenType.None;
+                //    // RegEx-Beispiel für Identifier
+                //    // \[*[A-Za-z_]+[A-Za-z0-9_]*\]*
 
-                for (int next = _reader.Read(), i = 0; i <= buffer.Length && -1 != next; i++, next = _reader.Read())
-                {
-                    if (i == buffer.Length) throw new OutOfMemoryException($"{nameof(buffer)} was to small.");
+                //    var character = (char)next;
+                //    var isAlpha = character >= 'a' && character <= 'z' ||
+                //                  character >= 'A' && character <= 'Z';
+                //    var isNumeric = character >= '0' && character <= '9';
+                //    //var isExplicitIdentifierStartChar = character == '[';
+                //    var isIdentifierStartChar = isAlpha /*|| isExplicitIdentifierStartChar*/;
+                //    // var isNumeric
+                //    var isIdentifierFollowupChar = isAlpha || isNumeric;
+                //    // var isOperator
 
-                    var character = (char)next;
-                    var isIdentifier = character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z';
-                    var isIdentifierStart = character == '[';
-                    var isIdentifierEnd = character == ']';
+                //    if (!isIdentifierStartChar && i == 0)
+                //    {
+                //        throw new IdentifierCannotStartWithDigitException();
+                //    }
 
-                    if (isIdentifierStart)
-                    {
-                        continue;
-                    }
+                //    if (isIdentifierStartChar || isIdentifierFollowupChar)
+                //    {
+                //        buffer[i] = character;
+                //    }
+                //}
 
-                    if (isIdentifier)
-                    {
-                        buffer[i] = character;
-                        continue;
-                    }
+                //return new Token(new string(b, 0, i), TODO);
 
-                    return new Token(new string(b, 0, i));
-
-
-                }
+                return new Token(string.Empty, Span<char>.Empty);
             }
+        }
 
-            return null;
+        public class IdentifierCannotStartWithDigitException : Exception
+        {
         }
     }
 
-    public enum TokenType
-    {
-        None,
-        Identifier,
-        Operator,
-        Value,
-    }
 
-    public class Token
+    //public enum TokenType
+    //{
+    //    None,
+    //    Identifier,
+    //    Operator,
+    //    Value,
+    //}
+
+    public readonly ref struct Token
     {
-        public Token(string name)
+        public Token(string name, Span<char> content)
         {
             Name = name;
+            Content = content;
         }
         public string Name { get; }
+        public Span<char> Content { get; }
     }
 
 }
