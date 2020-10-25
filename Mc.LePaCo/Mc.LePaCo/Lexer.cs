@@ -40,7 +40,7 @@ namespace Mc.LePaCo
                 
             }
 
-            return new Token(string.Empty, Span<char>.Empty);
+            return new Token(string.Empty);
         }
 
         public unsafe Token GetNextToken()
@@ -81,7 +81,7 @@ namespace Mc.LePaCo
 
                 //return new Token(new string(b, 0, i), TODO);
 
-                return new Token(string.Empty, Span<char>.Empty);
+                return new Token(string.Empty);
             }
         }
 
@@ -99,15 +99,14 @@ namespace Mc.LePaCo
     //    Value,
     //}
 
-    public readonly ref struct Token
+    public readonly struct Token
     {
-        public Token(string name, Span<char> content)
+        public Token(string name)
         {
             Name = name;
-            Content = content;
         }
         public string Name { get; }
-        public Span<char> Content { get; }
+        
     }
 
 }

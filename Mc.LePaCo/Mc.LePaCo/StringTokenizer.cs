@@ -47,7 +47,7 @@ namespace Mc.LePaCo
                 {
                     var charactersRange = start..(i + start);
                     var valueRange = (charactersRange.Start.Value + 1)..(charactersRange.End.Value - 1);
-                    var result = new Token(string.Empty, stream[valueRange]);
+                    var result = new Token(string.Empty);
 
                     //if (stream.Length > i)
                     //{

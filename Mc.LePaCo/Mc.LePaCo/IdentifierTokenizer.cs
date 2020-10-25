@@ -18,7 +18,7 @@ namespace Mc.LePaCo
             return next == '[' || char.IsLetter((char)next);
         }
 
-        public (Token Token, Range CharactersTaken) Get(Span<char> stream, int start)
+        public Token Get(Span<char> stream, int start)
         {
             throw new NotImplementedException();
         }

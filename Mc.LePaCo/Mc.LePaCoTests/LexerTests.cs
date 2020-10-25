@@ -5,12 +5,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace Mc.LePaCo.Tests
 {
     public class LexerTests
     {
+        [Fact]
+        public void HeapTest()
+        {
+            var size = GC.GetTotalMemory(true);
+            var o = new object();
+            var diff = GC.GetTotalMemory(true) - size;
+            var i = 1;
+            diff = GC.GetTotalMemory(true)- size - diff;
+        }
         [Fact]
         public void SpanTest()
         {

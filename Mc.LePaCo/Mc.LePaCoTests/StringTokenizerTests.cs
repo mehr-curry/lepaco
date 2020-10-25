@@ -14,7 +14,7 @@ namespace Mc.LePaCo.Tests
             var data = new Span<char>("\"test\"".ToCharArray());
             var testee = new StringTokenizer(null);
             var result = testee.Get(data, 0);
-            Assert.Equal("test", new string(data[result.CharactersTaken]));
+            Assert.Equal("test", new string(data[..1]));
         }
 
         [Fact()]
